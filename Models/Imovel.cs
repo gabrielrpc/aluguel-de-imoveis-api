@@ -17,6 +17,8 @@ namespace aluguel_de_imoveis.Models
         public decimal ValorAluguel { get; set; }
         public bool Disponivel { get; set; } = true;
 
+        public int Tipo { get; set; }
+
         public Endereco Endereco { get; set; } = null!;
 
         public Guid ProprietarioId { get; set; }
