@@ -1,0 +1,27 @@
+﻿{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:5143",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ConnectionStrings:CONNECTION_STRING": "Server=(localdb)\\mssqllocaldb;Database=aluguel_de_imoveis_db;Trusted_Connection=True;MultipleActiveResultSets=true"
+      }
+    },
+    "https": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "https://localhost:7262;http://localhost:5143",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ConnectionStrings:CONNECTION_STRING": "Server=(localdb)\\mssqllocaldb;Database=aluguel_de_imoveis_db;Trusted_Connection=True;MultipleActiveResultSets=true"
+      }
+    }
+  }
+}
