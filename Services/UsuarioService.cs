@@ -18,6 +18,9 @@ namespace aluguel_de_imoveis.Services
 
         public async Task<Usuario> CadastrarUsuario(RequestUsuarioJson request)
         {
+            request.Telefone = new string(request.Telefone.Where(char.IsDigit).ToArray());
+            request.Cpf = new string(request.Cpf.Where(char.IsDigit).ToArray());
+
             var validator = new UsuarioValidations();
 
             var result = validator.Validate(request);
@@ -39,8 +42,9 @@ namespace aluguel_de_imoveis.Services
             {
                 Nome = request.Nome,
                 Email = request.Email,
+                Cpf = request.Cpf,
+                Telefone = request.Telefone,
                 Senha = BCrypt.Net.BCrypt.HashPassword(request.Senha),
-                Tipo = request.Tipo
             };
 
             return await _usuarioRepository.CadastrarUsuario(novoUsuario);

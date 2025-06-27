@@ -18,32 +18,13 @@ namespace aluguel_de_imoveis.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "varchar(100)", nullable: false),
                     Email = table.Column<string>(type: "varchar(100)", nullable: false),
-                    Senha = table.Column<string>(type: "varchar(255)", nullable: false),
-                    Tipo = table.Column<int>(type: "int", nullable: false)
+                    Cpf = table.Column<string>(type: "varchar(11)", nullable: false),
+                    Telefone = table.Column<string>(type: "varchar(11)", nullable: false),
+                    Senha = table.Column<string>(type: "varchar(255)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuarios", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Clientes",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Cpf = table.Column<string>(type: "varchar(11)", nullable: false),
-                    Telefone = table.Column<string>(type: "varchar(11)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Clientes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Clientes_Usuarios_UsuarioId",
-                        column: x => x.UsuarioId,
-                        principalTable: "Usuarios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -55,14 +36,15 @@ namespace aluguel_de_imoveis.Migrations
                     Descricao = table.Column<string>(type: "text", nullable: false),
                     ValorAluguel = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Disponivel = table.Column<bool>(type: "bit", nullable: false),
-                    ProprietarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    Tipo = table.Column<int>(type: "int", nullable: false),
+                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Imoveis", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Imoveis_Usuarios_ProprietarioId",
-                        column: x => x.ProprietarioId,
+                        name: "FK_Imoveis_Usuarios_UsuarioId",
+                        column: x => x.UsuarioId,
                         principalTable: "Usuarios",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -101,30 +83,24 @@ namespace aluguel_de_imoveis.Migrations
                     DataFim = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ValorFinal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    ClienteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ImovelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Locacoes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Locacoes_Clientes_ClienteId",
-                        column: x => x.ClienteId,
-                        principalTable: "Clientes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Locacoes_Imoveis_ImovelId",
                         column: x => x.ImovelId,
                         principalTable: "Imoveis",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Locacoes_Usuarios_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Usuarios",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Clientes_UsuarioId",
-                table: "Clientes",
-                column: "UsuarioId",
-                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Enderecos_ImovelId",
@@ -133,19 +109,19 @@ namespace aluguel_de_imoveis.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Imoveis_ProprietarioId",
+                name: "IX_Imoveis_UsuarioId",
                 table: "Imoveis",
-                column: "ProprietarioId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Locacoes_ClienteId",
-                table: "Locacoes",
-                column: "ClienteId");
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Locacoes_ImovelId",
                 table: "Locacoes",
                 column: "ImovelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Locacoes_UsuarioId",
+                table: "Locacoes",
+                column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Usuarios_Email",
@@ -162,9 +138,6 @@ namespace aluguel_de_imoveis.Migrations
 
             migrationBuilder.DropTable(
                 name: "Locacoes");
-
-            migrationBuilder.DropTable(
-                name: "Clientes");
 
             migrationBuilder.DropTable(
                 name: "Imoveis");

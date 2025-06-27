@@ -12,11 +12,13 @@ namespace aluguel_de_imoveis.Models
         [Column(TypeName = "varchar(100)")]
         public string Email { get; set; } = string.Empty;
 
+        [Column(TypeName = "varchar(11)")]
+        public string Cpf { get; set; } = string.Empty;
+
+        [Column(TypeName = "varchar(11)")]
+        public string Telefone { get; set; } = string.Empty;
+
         [Column(TypeName = "varchar(255)")]
         public string Senha { get; set; } = string.Empty;
-
-        public int Tipo { get; set; }
-
-        public Cliente? Cliente { get; set; }
     }
 }

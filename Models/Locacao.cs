@@ -13,8 +13,8 @@ namespace aluguel_de_imoveis.Models
         public decimal ValorFinal { get; set; }
         public int Status { get; set; } 
 
-        public Guid ClienteId { get; set; }
-        public Cliente Cliente { get; set; } = null!;
+        public Guid UsuarioId { get; set; }
+        public Usuario Usuario { get; set; } = null!;
 
         public Guid ImovelId { get; set; }
         public Imovel Imovel { get; set; } = null!;

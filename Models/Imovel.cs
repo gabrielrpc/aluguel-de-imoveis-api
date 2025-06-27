@@ -21,8 +21,8 @@ namespace aluguel_de_imoveis.Models
 
         public Endereco Endereco { get; set; } = null!;
 
-        public Guid ProprietarioId { get; set; }
-        public Usuario Proprietario { get; set; } = null!;
+        public Guid UsuarioId { get; set; }
+        public Usuario Usuario { get; set; } = null!;
 
         public ICollection<Locacao> Locacoes { get; set; } = new List<Locacao>();
     }

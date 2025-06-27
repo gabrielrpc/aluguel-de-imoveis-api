@@ -12,7 +12,7 @@ using aluguel_de_imoveis.Infraestructure.DataAccess;
 namespace aluguel_de_imoveis.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250626010647_MigrationInitial")]
+    [Migration("20250627231148_MigrationInitial")]
     partial class MigrationInitial
     {
         /// <inheritdoc />
@@ -24,31 +24,6 @@ namespace aluguel_de_imoveis.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("aluguel_de_imoveis.Models.Cliente", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Cpf")
-                        .IsRequired()
-                        .HasColumnType("varchar(11)");
-
-                    b.Property<string>("Telefone")
-                        .IsRequired()
-                        .HasColumnType("varchar(11)");
-
-                    b.Property<Guid>("UsuarioId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UsuarioId")
-                        .IsUnique();
-
-                    b.ToTable("Clientes");
-                });
 
             modelBuilder.Entity("aluguel_de_imoveis.Models.Endereco", b =>
                 {
@@ -103,19 +78,22 @@ namespace aluguel_de_imoveis.Migrations
                     b.Property<bool>("Disponivel")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("ProprietarioId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("Tipo")
+                        .HasColumnType("int");
 
                     b.Property<string>("Titulo")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("ValorAluguel")
                         .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProprietarioId");
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Imoveis");
                 });
@@ -124,9 +102,6 @@ namespace aluguel_de_imoveis.Migrations
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("ClienteId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DataFim")
@@ -141,14 +116,17 @@ namespace aluguel_de_imoveis.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<decimal>("ValorFinal")
                         .HasColumnType("decimal(18, 2)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClienteId");
-
                     b.HasIndex("ImovelId");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("Locacoes");
                 });
@@ -158,6 +136,10 @@ namespace aluguel_de_imoveis.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Cpf")
+                        .IsRequired()
+                        .HasColumnType("varchar(11)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -171,8 +153,9 @@ namespace aluguel_de_imoveis.Migrations
                         .IsRequired()
                         .HasColumnType("varchar(255)");
 
-                    b.Property<int>("Tipo")
-                        .HasColumnType("int");
+                    b.Property<string>("Telefone")
+                        .IsRequired()
+                        .HasColumnType("varchar(11)");
 
                     b.HasKey("Id");
 
@@ -180,17 +163,6 @@ namespace aluguel_de_imoveis.Migrations
                         .IsUnique();
 
                     b.ToTable("Usuarios");
-                });
-
-            modelBuilder.Entity("aluguel_de_imoveis.Models.Cliente", b =>
-                {
-                    b.HasOne("aluguel_de_imoveis.Models.Usuario", "Usuario")
-                        .WithOne("Cliente")
-                        .HasForeignKey("aluguel_de_imoveis.Models.Cliente", "UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("aluguel_de_imoveis.Models.Endereco", b =>
@@ -206,32 +178,32 @@ namespace aluguel_de_imoveis.Migrations
 
             modelBuilder.Entity("aluguel_de_imoveis.Models.Imovel", b =>
                 {
-                    b.HasOne("aluguel_de_imoveis.Models.Usuario", "Proprietario")
+                    b.HasOne("aluguel_de_imoveis.Models.Usuario", "Usuario")
                         .WithMany()
-                        .HasForeignKey("ProprietarioId")
+                        .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Proprietario");
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("aluguel_de_imoveis.Models.Locacao", b =>
                 {
-                    b.HasOne("aluguel_de_imoveis.Models.Cliente", "Cliente")
-                        .WithMany()
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("aluguel_de_imoveis.Models.Imovel", "Imovel")
                         .WithMany("Locacoes")
                         .HasForeignKey("ImovelId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Cliente");
+                    b.HasOne("aluguel_de_imoveis.Models.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Imovel");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("aluguel_de_imoveis.Models.Imovel", b =>
@@ -240,11 +212,6 @@ namespace aluguel_de_imoveis.Migrations
                         .IsRequired();
 
                     b.Navigation("Locacoes");
-                });
-
-            modelBuilder.Entity("aluguel_de_imoveis.Models.Usuario", b =>
-                {
-                    b.Navigation("Cliente");
                 });
 #pragma warning restore 612, 618
         }

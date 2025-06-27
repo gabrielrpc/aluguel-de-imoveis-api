@@ -9,7 +9,6 @@ namespace aluguel_de_imoveis.Infraestructure.DataAccess
         public Context(DbContextOptions<Context> options) : base(options) { }
 
         public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<Cliente> Clientes { get; set; }
         public DbSet<Imovel> Imoveis { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
         public DbSet<Locacao> Locacoes { get; set; }
@@ -18,15 +17,10 @@ namespace aluguel_de_imoveis.Infraestructure.DataAccess
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Cliente>()
-                .HasOne(c => c.Usuario)
-                .WithOne(u => u.Cliente)
-                .HasForeignKey<Cliente>(c => c.UsuarioId);
-
             modelBuilder.Entity<Imovel>()
-                .HasOne(i => i.Proprietario)
+                .HasOne(i => i.Usuario)
                 .WithMany()
-                .HasForeignKey(i => i.ProprietarioId);
+                .HasForeignKey(i => i.UsuarioId);
 
             modelBuilder.Entity<Imovel>()
                 .HasOne(i => i.Endereco)
@@ -34,9 +28,9 @@ namespace aluguel_de_imoveis.Infraestructure.DataAccess
                 .HasForeignKey<Endereco>(e => e.ImovelId);
 
             modelBuilder.Entity<Locacao>()
-                .HasOne(l => l.Cliente)
+                .HasOne(l => l.Usuario)
                 .WithMany()
-                .HasForeignKey(l => l.ClienteId);
+                .HasForeignKey(l => l.UsuarioId);
 
             modelBuilder.Entity<Locacao>()
                 .HasOne(l => l.Imovel)
