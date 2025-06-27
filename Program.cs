@@ -1,6 +1,10 @@
 using aluguel_de_imoveis.Infraestructure.DataAccess;
+using aluguel_de_imoveis.Services.Interfaces;
+using aluguel_de_imoveis.Services;
 using Microsoft.EntityFrameworkCore;
-using System;
+using aluguel_de_imoveis.Repository.Interfaces;
+using aluguel_de_imoveis.Repository;
+using aluguel_de_imoveis.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +16,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
+
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 
 var app = builder.Build();
 
@@ -28,6 +35,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
