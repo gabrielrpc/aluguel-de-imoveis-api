@@ -42,7 +42,7 @@ namespace aluguel_de_imoveis.Infraestructure.DataAccess
                 .HasOne(l => l.Imovel)
                 .WithMany(i => i.Locacoes)
                 .HasForeignKey(l => l.ImovelId)
-                .OnDelete(DeleteBehavior.NoAction); ;
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Usuario>()
                 .HasIndex(u => u.Email)
