@@ -4,7 +4,6 @@ using aluguel_de_imoveis.Models;
 using aluguel_de_imoveis.Repository.Interfaces;
 using aluguel_de_imoveis.Services.Interfaces;
 using aluguel_de_imoveis.Services.Validations;
-using FluentValidation.Results;
 
 namespace aluguel_de_imoveis.Services
 {
