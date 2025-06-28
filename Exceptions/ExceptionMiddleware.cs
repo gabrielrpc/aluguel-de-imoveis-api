@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using System.Text.Json;
 
 namespace aluguel_de_imoveis.Exceptions
 {
@@ -22,12 +23,16 @@ namespace aluguel_de_imoveis.Exceptions
                 context.Response.StatusCode = (int)ex.GetHttpStatusCode();
                 context.Response.ContentType = "application/json";
 
-                var result = new
+                var errorMessages = ex.GetErrorMessages();
+
+                var response = new
                 {
-                    erros = ex.GetErrorMessages()
+                    erros = (errorMessages != null && errorMessages.Any())
+                        ? errorMessages
+                        : new List<string> { ex.GetErrorMessage() }
                 };
 
-                await context.Response.WriteAsJsonAsync(result);
+                await context.Response.WriteAsync(JsonSerializer.Serialize(response));
             }
             catch (Exception)
             {
@@ -39,7 +44,7 @@ namespace aluguel_de_imoveis.Exceptions
                     erro = "Ocorreu um erro inesperado, tente novamente mais tarde!"
                 };
 
-                await context.Response.WriteAsJsonAsync(result);
+                await context.Response.WriteAsync(JsonSerializer.Serialize(result));
             }
         }
     }
