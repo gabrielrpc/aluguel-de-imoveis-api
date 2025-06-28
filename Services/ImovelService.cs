@@ -1,9 +1,8 @@
 ﻿using aluguel_de_imoveis.Communication.Request;
+using aluguel_de_imoveis.Communication.Response;
 using aluguel_de_imoveis.Exceptions;
 using aluguel_de_imoveis.Models;
-using aluguel_de_imoveis.Repository;
 using aluguel_de_imoveis.Repository.Interfaces;
-using aluguel_de_imoveis.Security;
 using aluguel_de_imoveis.Services.Interfaces;
 using aluguel_de_imoveis.Services.Validations;
 
@@ -53,6 +52,35 @@ namespace aluguel_de_imoveis.Services
 
 
             return await _imoveloRepository.CadastrarImovel(novoImovel);
+        }
+
+        public async Task<List<ResponseImovelJson>> ListarImoveisDisponiveis(RequestListarImoveisDisponiveis request)
+        {
+            var imoveis = await _imoveloRepository.ListarImoveisDisponiveis(request);
+
+            if (imoveis == null || !imoveis.Any())
+            {
+                throw new NotFoundException("Nenhum imóvel foi encontrado para os critérios informados.");
+            }
+
+            return imoveis.Select(imovel => new ResponseImovelJson
+            {
+                Id = imovel.Id,
+                Titulo = imovel.Titulo,
+                Descricao = imovel.Descricao,
+                ValorAluguel = imovel.ValorAluguel,
+                Disponivel = imovel.Disponivel,
+                Tipo = imovel.Tipo,
+                Endereco = new ResponseEnderecoJson
+                {
+                    Logradouro = imovel.Endereco.Logradouro,
+                    Numero = imovel.Endereco.Numero,
+                    Bairro = imovel.Endereco.Bairro,
+                    Cidade = imovel.Endereco.Cidade,
+                    Uf = imovel.Endereco.Uf,
+                    Cep = imovel.Endereco.Cep
+                }
+            }).ToList();
         }
     }
 }

@@ -28,5 +28,14 @@ namespace aluguel_de_imoveis.Controllers
 
             return Created();
         }
+
+        [HttpGet("listar-imoveis-disponiveis")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseErrorMessegesJson), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ListarImoveisDisponiveis([FromQuery] RequestListarImoveisDisponiveis request)
+        {
+            var result =  await _imovelService.ListarImoveisDisponiveis(request);
+            return Ok(result);
+        }
     }
 }

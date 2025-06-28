@@ -19,13 +19,13 @@ namespace aluguel_de_imoveis.Controllers
 
         [HttpPost("cadastrar")]
         [AllowAnonymous]
-        [ProducesResponseType(typeof(ResponseCadastrarUsuarioJson), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ResponseErrorMessegesJson), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CadastrarUsuario(RequestUsuarioJson request)
         {
             var response = await _usuarioService.CadastrarUsuario(request);
 
-            return Created(string.Empty, response);
+            return Created();
         }
 
         [HttpPost("login")]
