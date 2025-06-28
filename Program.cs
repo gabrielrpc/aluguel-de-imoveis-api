@@ -11,8 +11,6 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using aluguel_de_imoveis.Security;
 
-const string AUTHENTICATION_TYPE = "Bearer";
-
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("CONNECTION_STRING");
@@ -24,7 +22,7 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
 {
-    options.AddSecurityDefinition(AUTHENTICATION_TYPE, new OpenApiSecurityScheme
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Description = @"JWT Authorization header using the Bearer scheme.
                         Enter 'Bearer' [space] and then your token in the text input below.
@@ -32,7 +30,8 @@ builder.Services.AddSwaggerGen(options =>
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
-        Scheme = AUTHENTICATION_TYPE,
+        Scheme = "Bearer",
+        BearerFormat = "JWT"
     });
 
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -43,11 +42,8 @@ builder.Services.AddSwaggerGen(options =>
                 Reference = new OpenApiReference
                 {
                     Type = ReferenceType.SecurityScheme,
-                    Id = AUTHENTICATION_TYPE
+                    Id = "Bearer"
                 },
-                Scheme = "oauth2",
-                Name = AUTHENTICATION_TYPE,
-                In = ParameterLocation.Header
             },
             new List<string>()
         }
@@ -58,6 +54,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddScoped<IImovelService, ImovelService>();
+builder.Services.AddScoped<IImovelRepository, ImovelRepository>();
 builder.Services.AddScoped<JwtTokenGenerator>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
