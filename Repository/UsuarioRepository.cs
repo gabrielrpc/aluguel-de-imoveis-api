@@ -25,5 +25,10 @@ namespace aluguel_de_imoveis.Repository
         {
             return await _context.Usuarios.AnyAsync(u => u.Email == email);
         }
+
+        public async Task<Usuario?> ObterUsuarioPorEmail(string email)
+        {
+            return await _context.Usuarios.FirstOrDefaultAsync(u => u.Email == email);
+        }
     }
 }

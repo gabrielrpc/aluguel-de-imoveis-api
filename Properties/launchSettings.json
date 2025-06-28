@@ -9,7 +9,8 @@
       "applicationUrl": "http://localhost:5143",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionStrings:CONNECTION_STRING": "Server=(localdb)\\mssqllocaldb;Database=aluguel_de_imoveis_db;Trusted_Connection=True;MultipleActiveResultSets=true"
+        "ConnectionStrings:CONNECTION_STRING": "Server=(localdb)\\mssqllocaldb;Database=aluguel_de_imoveis_db;Trusted_Connection=True;MultipleActiveResultSets=true",
+        "Jwt:Key": "41hgJAFCWyyONnsl56NvYKcAzw2GuZOe"
       }
     },
     "https": {
@@ -20,7 +21,8 @@
       "applicationUrl": "https://localhost:7262;http://localhost:5143",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "ConnectionStrings:CONNECTION_STRING": "Server=(localdb)\\mssqllocaldb;Database=aluguel_de_imoveis_db;Trusted_Connection=True;MultipleActiveResultSets=true"
+        "ConnectionStrings:CONNECTION_STRING": "Server=(localdb)\\mssqllocaldb;Database=aluguel_de_imoveis_db;Trusted_Connection=True;MultipleActiveResultSets=true",
+        "Jwt:Key": "41hgJAFCWyyONnsl56NvYKcAzw2GuZOe"
       }
     }
   }
