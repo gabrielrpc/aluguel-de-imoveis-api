@@ -1,10 +1,10 @@
 ﻿using aluguel_de_imoveis.Communication.Request;
-using aluguel_de_imoveis.Communication.Response;
 using aluguel_de_imoveis.Exceptions;
 using aluguel_de_imoveis.Models;
 using aluguel_de_imoveis.Repository.Interfaces;
 using aluguel_de_imoveis.Services.Interfaces;
 using aluguel_de_imoveis.Services.Validations;
+using aluguel_de_imoveis.Utils.Enums;
 
 namespace aluguel_de_imoveis.Services
 {
@@ -37,7 +37,7 @@ namespace aluguel_de_imoveis.Services
                 Descricao = request.Descricao,
                 ValorAluguel = request.ValorAluguel,
                 Disponivel = request.Disponivel,
-                Tipo = request.Tipo,
+                Tipo = (TipoImovel)request.Tipo,
                 Endereco = new Endereco
                 {
                     Logradouro = request.Endereco.Logradouro,
@@ -54,33 +54,16 @@ namespace aluguel_de_imoveis.Services
             return await _imoveloRepository.CadastrarImovel(novoImovel);
         }
 
-        public async Task<List<ResponseImovelJson>> ListarImoveisDisponiveis(RequestListarImoveisDisponiveis request)
+        public async Task<List<Imovel>> ListarImoveisDisponiveis(RequestListarImoveisDisponiveis request)
         {
             var imoveis = await _imoveloRepository.ListarImoveisDisponiveis(request);
 
-            if (imoveis == null || !imoveis.Any())
+            if (imoveis == null || imoveis.Count == 0)
             {
                 throw new NotFoundException("Nenhum imóvel foi encontrado para os critérios informados.");
             }
 
-            return imoveis.Select(imovel => new ResponseImovelJson
-            {
-                Id = imovel.Id,
-                Titulo = imovel.Titulo,
-                Descricao = imovel.Descricao,
-                ValorAluguel = imovel.ValorAluguel,
-                Disponivel = imovel.Disponivel,
-                Tipo = imovel.Tipo,
-                Endereco = new ResponseEnderecoJson
-                {
-                    Logradouro = imovel.Endereco.Logradouro,
-                    Numero = imovel.Endereco.Numero,
-                    Bairro = imovel.Endereco.Bairro,
-                    Cidade = imovel.Endereco.Cidade,
-                    Uf = imovel.Endereco.Uf,
-                    Cep = imovel.Endereco.Cep
-                }
-            }).ToList();
+            return imoveis;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using aluguel_de_imoveis.Utils.Enums;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace aluguel_de_imoveis.Models
@@ -17,7 +18,7 @@ namespace aluguel_de_imoveis.Models
         public decimal ValorAluguel { get; set; }
         public bool Disponivel { get; set; } = true;
 
-        public int Tipo { get; set; }
+        public TipoImovel Tipo;
 
         public Endereco Endereco { get; set; } = null!;
 

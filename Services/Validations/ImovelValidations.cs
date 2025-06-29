@@ -10,7 +10,7 @@ namespace aluguel_de_imoveis.Services.Validations
             RuleFor(request => request.Titulo).NotEmpty().WithMessage("O título é obrigatório.");
             RuleFor(request => request.Descricao).NotEmpty().WithMessage("A descrição é obrigatória.");
             RuleFor(request => request.ValorAluguel).GreaterThan(0).WithMessage("O valor do aluguel deve ser maior que zero.");
-            RuleFor(request => request.Tipo).GreaterThanOrEqualTo(0).WithMessage("O tipo do imóvel é obrigatório.");
+            RuleFor(request => request.Tipo).IsInEnum().WithMessage("Tipo de imóvel inválido.");
             RuleFor(request => request.Endereco).NotNull().WithMessage("O endereço é obrigatório.");
             When(request => request.Endereco != null, () =>
             {

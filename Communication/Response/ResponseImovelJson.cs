@@ -10,7 +10,7 @@ namespace aluguel_de_imoveis.Communication.Response
         public string Descricao { get; set; } = string.Empty;
         public decimal ValorAluguel { get; set; }
         public bool Disponivel { get; set; } = true;
-        public int Tipo { get; set; }
+        public enum Tipo;
         public ResponseEnderecoJson Endereco { get; set; } = null!;
     }
 }

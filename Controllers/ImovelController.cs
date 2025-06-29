@@ -21,6 +21,7 @@ namespace aluguel_de_imoveis.Controllers
 
         [HttpPost("cadastrar")]
         [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ResponseErrorMessegesJson), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CadastrarImovel(RequestImovelJson request)
         {
@@ -31,6 +32,7 @@ namespace aluguel_de_imoveis.Controllers
 
         [HttpGet("listar-imoveis-disponiveis")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ResponseErrorMessegesJson), StatusCodes.Status404NotFound)]
         public async Task<IActionResult> ListarImoveisDisponiveis([FromQuery] RequestListarImoveisDisponiveis request)
         {
