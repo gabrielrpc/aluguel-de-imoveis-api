@@ -9,11 +9,11 @@ namespace aluguel_de_imoveis.Services.Validations
         public LocacaoValidations()
         {
             RuleFor(locacao => locacao.DataInicio)
-                .Must(data => data.Date < DateTime.UtcNow.Date)
+                .Must(data => data.Date >= DateTime.UtcNow.Date)
                 .WithMessage("A data de início não pode ser anterior ao dia atual.");
 
             RuleFor(locacao => locacao)
-                .Must(locacao => (locacao.DataFim - locacao.DataInicio).TotalDays < 365)
+                .Must(locacao => (locacao.DataFim.Date - locacao.DataInicio.Date).TotalDays >= 365)
                 .WithMessage("O período da locação deve ser de pelo menos 1 ano.");
         }
     }

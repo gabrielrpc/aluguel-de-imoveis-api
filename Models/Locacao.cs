@@ -13,7 +13,8 @@ namespace aluguel_de_imoveis.Models
         [Column(TypeName = "decimal(18, 2)")]
         public decimal ValorFinal { get; set; }
 
-        public StatusLocacao Status;
+        [Column(TypeName = "int")]
+        public StatusLocacao Status { get; set; }
 
         public Guid UsuarioId { get; set; }
         public Usuario Usuario { get; set; } = null!;

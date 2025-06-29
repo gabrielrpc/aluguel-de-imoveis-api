@@ -18,7 +18,8 @@ namespace aluguel_de_imoveis.Models
         public decimal ValorAluguel { get; set; }
         public bool Disponivel { get; set; } = true;
 
-        public TipoImovel Tipo;
+        [Column(TypeName = "int")]
+        public TipoImovel Tipo { get; set; }
 
         public Endereco Endereco { get; set; } = null!;
 

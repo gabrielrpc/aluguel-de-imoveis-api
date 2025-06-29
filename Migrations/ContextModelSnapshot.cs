@@ -75,6 +75,9 @@ namespace aluguel_de_imoveis.Migrations
                     b.Property<bool>("Disponivel")
                         .HasColumnType("bit");
 
+                    b.Property<int>("Tipo")
+                        .HasColumnType("int");
+
                     b.Property<string>("Titulo")
                         .IsRequired()
                         .HasColumnType("varchar(100)");
@@ -106,6 +109,9 @@ namespace aluguel_de_imoveis.Migrations
 
                     b.Property<Guid>("ImovelId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("UsuarioId")
                         .HasColumnType("uniqueidentifier");

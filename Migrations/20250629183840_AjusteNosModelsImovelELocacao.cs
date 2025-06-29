@@ -10,18 +10,6 @@ namespace aluguel_de_imoveis.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Status",
-                table: "Locacoes");
-
-            migrationBuilder.DropColumn(
-                name: "Tipo",
-                table: "Imoveis");
-        }
-
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
             migrationBuilder.AddColumn<int>(
                 name: "Status",
                 table: "Locacoes",
@@ -35,6 +23,18 @@ namespace aluguel_de_imoveis.Migrations
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropColumn(
+                name: "Status",
+                table: "Locacoes");
+
+            migrationBuilder.DropColumn(
+                name: "Tipo",
+                table: "Imoveis");
         }
     }
 }

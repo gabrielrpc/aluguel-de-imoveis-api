@@ -1,4 +1,5 @@
 ﻿using aluguel_de_imoveis.Models;
+using aluguel_de_imoveis.Utils.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace aluguel_de_imoveis.Communication.Response
@@ -10,7 +11,7 @@ namespace aluguel_de_imoveis.Communication.Response
         public string Descricao { get; set; } = string.Empty;
         public decimal ValorAluguel { get; set; }
         public bool Disponivel { get; set; } = true;
-        public enum Tipo;
+        public TipoImovel Tipo { get; set; }
         public ResponseEnderecoJson Endereco { get; set; } = null!;
     }
 }
