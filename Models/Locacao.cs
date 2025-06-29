@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using aluguel_de_imoveis.Utils.Enums;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace aluguel_de_imoveis.Models
@@ -11,7 +12,8 @@ namespace aluguel_de_imoveis.Models
 
         [Column(TypeName = "decimal(18, 2)")]
         public decimal ValorFinal { get; set; }
-        public int Status { get; set; } 
+
+        public StatusLocacao Status;
 
         public Guid UsuarioId { get; set; }
         public Usuario Usuario { get; set; } = null!;

@@ -45,5 +45,10 @@ namespace aluguel_de_imoveis.Repository
 
             return await query.Where(imovel => imovel.Disponivel).Skip(skip).Take(PAGE_SIZE).ToListAsync();
         }
+
+        public async Task<Imovel?> ObterImovelPorId(Guid imovelId)
+        {
+            return await _context.Imoveis.FirstOrDefaultAsync(imovel => imovel.Id == imovelId);
+        }
     }
 }

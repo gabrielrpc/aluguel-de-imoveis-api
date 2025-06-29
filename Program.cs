@@ -56,6 +56,8 @@ builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<IImovelService, ImovelService>();
 builder.Services.AddScoped<IImovelRepository, ImovelRepository>();
+builder.Services.AddScoped<ILocacaoService, LocacaoService>();
+builder.Services.AddScoped<ILocacaoRepository, LocacaoRepository>();
 builder.Services.AddScoped<JwtTokenGenerator>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

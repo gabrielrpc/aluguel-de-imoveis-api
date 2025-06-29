@@ -8,5 +8,7 @@ namespace aluguel_de_imoveis.Repository.Interfaces
         Task<Imovel> CadastrarImovel(Imovel imovel);
 
         Task<List<Imovel>> ListarImoveisDisponiveis(RequestListarImoveisDisponiveis request);
+
+        Task<Imovel?> ObterImovelPorId(Guid imovelId);
     }
 }
