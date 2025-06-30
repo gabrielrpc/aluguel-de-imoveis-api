@@ -12,8 +12,8 @@ using aluguel_de_imoveis.Infraestructure.DataAccess;
 namespace aluguel_de_imoveis.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250627231148_MigrationInitial")]
-    partial class MigrationInitial
+    [Migration("20250630112740_MigrationsIniciais")]
+    partial class MigrationsIniciais
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -115,6 +115,9 @@ namespace aluguel_de_imoveis.Migrations
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<Guid>("UsuarioId")
                         .HasColumnType("uniqueidentifier");

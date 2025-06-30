@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace aluguel_de_imoveis.Migrations
 {
     /// <inheritdoc />
-    public partial class MigrationInitial : Migration
+    public partial class MigrationsIniciais : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -84,7 +84,8 @@ namespace aluguel_de_imoveis.Migrations
                     ValorFinal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ImovelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    ImovelId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
