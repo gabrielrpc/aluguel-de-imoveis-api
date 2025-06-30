@@ -79,6 +79,7 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<Context>();
     context.Database.Migrate();
+    await SeederParaTestes.SeedAsync(context);
 }
 
 if (app.Environment.IsDevelopment())
