@@ -1,4 +1,4 @@
-# Aluguel de Imóveis
+# Sistema de Aluguel de Imóveis
 
 Aplicação web para gestão de aluguel de imóveis, desenvolvida em ASP.NET Core (.NET 9).
 
