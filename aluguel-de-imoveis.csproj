@@ -9,6 +9,8 @@
 
   <ItemGroup>
     <Compile Remove="Communication\Response\ResponseCadastrarUsuarioJson.cs" />
+    <Compile Remove="Migrations\20250629183840_AjusteNosModelsImovelELocacao.cs" />
+    <Compile Remove="Migrations\20250629183840_AjusteNosModelsImovelELocacao.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

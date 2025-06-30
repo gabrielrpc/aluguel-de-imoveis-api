@@ -30,5 +30,15 @@ namespace aluguel_de_imoveis.Controllers
             await _locacaoService.RegistrarLocacao(request);
             return Ok();
         }
+
+        [HttpGet("listar-locacoes-ativas")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ResponseErrorMessegesJson), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ListarLocacoesAtivas([FromQuery] RequestListarLocacoesAtivas request)
+        {
+            var response = await _locacaoService.ListarLocacoesAtivas(request);
+            return Ok(response);
+        }
     }
 }

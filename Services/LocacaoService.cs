@@ -1,4 +1,6 @@
-﻿using aluguel_de_imoveis.Communication.Request;
+﻿using aluguel_de_imoveis.Communication.Dto;
+using aluguel_de_imoveis.Communication.Request;
+using aluguel_de_imoveis.Communication.Response;
 using aluguel_de_imoveis.Exceptions;
 using aluguel_de_imoveis.Models;
 using aluguel_de_imoveis.Repository.Interfaces;
@@ -56,6 +58,28 @@ namespace aluguel_de_imoveis.Services
             };
 
             return await _locacaoRepository.RegistrarLocacao(novaLocacao);
+        }
+
+        public async Task<ResponseListarLocacoesAtivas> ListarLocacoesAtivas(RequestListarLocacoesAtivas request)
+        {
+            var locacoesAtivas = await _locacaoRepository.ListarLocacoesPorUsuarioId(request.UsuarioId, StatusLocacao.Locado);
+
+            var hoje = DateTime.UtcNow.Date;
+
+            var resposta = new ResponseListarLocacoesAtivas
+            {
+                Locacoes = locacoesAtivas.Select(locacao => new LocacaoAtivaDto
+                {
+                    Id = locacao.Id,
+                    ValorFinal = locacao.ValorFinal,
+                    DiasEmAndamento = (hoje - locacao.DataInicio.Date).Days,
+                    DiasRestantes = (locacao.DataFim.Date - hoje).Days,
+                    TituloImovel = locacao.Imovel.Titulo,
+                    TipoImovel = locacao.Imovel.Tipo
+                }).ToList()
+            };
+
+            return resposta;
         }
     }
 }

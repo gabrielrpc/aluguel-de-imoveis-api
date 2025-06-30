@@ -1,4 +1,5 @@
-﻿using aluguel_de_imoveis.Infraestructure.DataAccess;
+﻿using aluguel_de_imoveis.Communication.Response;
+using aluguel_de_imoveis.Infraestructure.DataAccess;
 using aluguel_de_imoveis.Models;
 using aluguel_de_imoveis.Repository.Interfaces;
 using aluguel_de_imoveis.Utils.Enums;
@@ -24,9 +25,14 @@ namespace aluguel_de_imoveis.Repository
 
         public async Task<Locacao?> ObterLocacaoPorImovelIdEUsuarioId(Guid ImovelId, Guid UsuarioId)
         {
-            return await _context.Locacoes.FirstOrDefaultAsync(locacao => locacao.ImovelId == ImovelId && 
-            locacao.UsuarioId == UsuarioId && 
+            return await _context.Locacoes.FirstOrDefaultAsync(locacao => locacao.ImovelId == ImovelId &&
+            locacao.UsuarioId == UsuarioId &&
             locacao.Status == StatusLocacao.Locado);
+        }
+
+        public async Task<List<Locacao>> ListarLocacoesPorUsuarioId(Guid usuarioId, StatusLocacao status)
+        {
+            return await _context.Locacoes.Include(l => l.Imovel).Where(locacao => locacao.UsuarioId == usuarioId && locacao.Status == status).ToListAsync();
         }
     }
 }

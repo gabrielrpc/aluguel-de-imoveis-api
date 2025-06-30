@@ -21,5 +21,7 @@ namespace aluguel_de_imoveis.Models
 
         public Guid ImovelId { get; set; }
         public Imovel Imovel { get; set; } = null!;
+
+        public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     }
 }
