@@ -31,15 +31,22 @@ namespace aluguel_de_imoveis.Services
 
             if (result.IsValid == false)
             {
-                var errorMessages = result.Errors.Select(error => error.ErrorMessage).ToList();
-                throw new ErrorOnValidationException(errorMessages);
+
+                if (result.Errors.Count > 1)
+                {
+                    var errorMessages = result.Errors.Select(error => error.ErrorMessage).ToList();
+                    throw new ErrorOnValidationException(errorMessages);
+                }
+
+                var errorMessage = result.Errors.First().ErrorMessage;
+                throw new BadRequestException(errorMessage);
             }
 
             var emailExistente = await _usuarioRepository.VerificarEmailExistente(request.Email);
 
             if (emailExistente)
             {
-                throw new ErrorOnValidationException(new List<string> { "E-mail já registrado na plataforma." });
+                throw new BadRequestException("E-mail já registrado na plataforma.");
             }
 
             var novoUsuario = new Usuario
@@ -60,8 +67,8 @@ namespace aluguel_de_imoveis.Services
             var usuario = await _usuarioRepository.ObterUsuarioPorEmail(request.Email);
 
             if (usuario == null || !BCrypt.Net.BCrypt.Verify(request.Senha, usuario.Senha))
-            {
-                throw new ErrorOnValidationException(new List<string> { "E-mail ou senha inválidos." });
+            { 
+                throw new BadRequestException("E-mail ou senha inválidos.");
             }
 
             var token = _tokenGenerator.GerarToken(usuario);

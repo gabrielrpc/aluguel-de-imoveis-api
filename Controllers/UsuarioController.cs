@@ -31,7 +31,7 @@ namespace aluguel_de_imoveis.Controllers
         [HttpPost("login")]
         [AllowAnonymous]
         [ProducesResponseType(typeof(ResponseLoginJson), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ResponseErrorMessegesJson), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ResponseErrorMessegeJson), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Login(RequestLoginJson request)
         {
             var response = await _usuarioService.Login(request);

@@ -25,12 +25,16 @@ namespace aluguel_de_imoveis.Exceptions
 
                 var errorMessages = ex.GetErrorMessages();
 
-                var response = new
+                object response;
+
+                if (errorMessages != null && errorMessages.Count() > 1)
                 {
-                    erros = (errorMessages != null && errorMessages.Any())
-                        ? errorMessages
-                        : new List<string> { ex.GetErrorMessage() }
-                };
+                    response = new { erros = errorMessages };
+                }
+                else
+                {
+                    response = new { erro = ex.GetErrorMessage() };
+                }
 
                 await context.Response.WriteAsync(JsonSerializer.Serialize(response));
             }
