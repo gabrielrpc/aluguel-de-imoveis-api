@@ -40,6 +40,11 @@ namespace aluguel_de_imoveis.Services
                 throw new NotFoundException("Imóvel não encontrado.");
             }
 
+            if(imovel.UsuarioId == request.UsuarioId)
+            {
+                throw new ConflictException("O usuário não pode alugar o próprio imóvel.");
+            }
+
             var existeLocacao = await _locacaoRepository.ObterLocacaoPorImovelIdEUsuarioId(request.ImovelId, request.UsuarioId);
 
             if (existeLocacao != null)
