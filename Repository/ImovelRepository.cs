@@ -48,7 +48,7 @@ namespace aluguel_de_imoveis.Repository
 
         public async Task<Imovel?> ObterImovelPorId(Guid imovelId)
         {
-            return await _context.Imoveis.FirstOrDefaultAsync(imovel => imovel.Id == imovelId);
+            return await _context.Imoveis.Include(imovel => imovel.Endereco).FirstOrDefaultAsync(imovel => imovel.Id == imovelId);
         }
     }
 }

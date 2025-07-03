@@ -82,5 +82,36 @@ namespace aluguel_de_imoveis.Services
                 }
             }).ToList();
         }
+
+        public async Task<ResponseImovelJson> ObterImovelPorId(RequestObterImovelJson request)
+        {
+            var imovel = await _imoveloRepository.ObterImovelPorId(request.ImovelId);
+
+            if (imovel == null)
+            {
+                throw new NotFoundException("Imóvel não foi encontrado.");
+            }
+
+            var response = new ResponseImovelJson
+            {
+                Id = imovel.Id,
+                Titulo = imovel.Titulo,
+                Descricao = imovel.Descricao,
+                ValorAluguel = imovel.ValorAluguel,
+                Tipo = imovel.Tipo,
+                Disponivel = imovel.Disponivel,
+                Endereco = new ResponseEnderecoJson
+                {
+                    Logradouro = imovel.Endereco.Logradouro,
+                    Numero = imovel.Endereco.Numero,
+                    Bairro = imovel.Endereco.Bairro,
+                    Cidade = imovel.Endereco.Cidade,
+                    Uf = imovel.Endereco.Uf,
+                    Cep = imovel.Endereco.Cep
+                }
+            };
+
+            return response;
+        }
     }
 }

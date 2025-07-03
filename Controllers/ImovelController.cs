@@ -39,5 +39,15 @@ namespace aluguel_de_imoveis.Controllers
             var result =  await _imovelService.ListarImoveisDisponiveis(request);
             return Ok(result);
         }
+
+        [HttpGet("{ImovelId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(typeof(ResponseErrorMessegeJson), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> ObterImovelPorId([FromRoute] RequestObterImovelJson request)
+        {
+            var imovel = await _imovelService.ObterImovelPorId(request);
+            return Ok(imovel);
+        }
     }
 }

@@ -9,5 +9,7 @@ namespace aluguel_de_imoveis.Services.Interfaces
         Task<Imovel> CadastrarImovel(RequestImovelJson request);
 
         Task<List<ResponseImovelJson>> ListarImoveisDisponiveis(RequestListarImoveisDisponiveis request);
+
+        Task<ResponseImovelJson> ObterImovelPorId(RequestObterImovelJson request);
     }
 }
