@@ -28,7 +28,7 @@ namespace aluguel_de_imoveis.Repository
         {
             var skip = request.Pagina > 0 ? (request.Pagina - 1) * PAGE_SIZE : 0;
 
-            var query = _context.Imoveis.Include(imovel => imovel.Endereco).AsQueryable();
+            var query = _context.Imoveis.Include(imovel => imovel.Endereco).Include(imovel => imovel.Usuario).AsQueryable();
 
             if (request.ValorMin.HasValue && request.ValorMax.HasValue)
             {

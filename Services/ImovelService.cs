@@ -79,6 +79,12 @@ namespace aluguel_de_imoveis.Services
                     Cidade = imovel.Endereco.Cidade,
                     Uf = imovel.Endereco.Uf,
                     Cep = imovel.Endereco.Cep
+                },
+                Usuario = new ResponseUsuarioJson
+                {
+                    Nome = imovel.Usuario.Nome,
+                    Email = imovel.Usuario.Email,
+                    Telefone = imovel.Usuario.Telefone,
                 }
             }).ToList();
         }
