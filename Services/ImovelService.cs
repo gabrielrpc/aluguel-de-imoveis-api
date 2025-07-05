@@ -27,8 +27,15 @@ namespace aluguel_de_imoveis.Services
 
             if (result.IsValid == false)
             {
-                var errorMessages = result.Errors.Select(error => error.ErrorMessage).ToList();
-                throw new ErrorOnValidationException(errorMessages);
+
+                if (result.Errors.Count > 1)
+                {
+                    var errorMessages = result.Errors.Select(error => error.ErrorMessage).ToList();
+                    throw new ErrorOnValidationException(errorMessages);
+                }
+
+                var errorMessage = result.Errors.First().ErrorMessage;
+                throw new BadRequestException(errorMessage);
             }
 
             var novoImovel = new Imovel
@@ -71,6 +78,7 @@ namespace aluguel_de_imoveis.Services
                 ValorAluguel = imovel.ValorAluguel,
                 Tipo = imovel.Tipo,
                 Disponivel = imovel.Disponivel,
+                UsuarioId = imovel.Usuario.Id,
                 Endereco = new ResponseEnderecoJson
                 {
                     Logradouro = imovel.Endereco.Logradouro,

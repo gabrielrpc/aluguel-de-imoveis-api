@@ -12,6 +12,8 @@ namespace aluguel_de_imoveis.Communication.Response
         public decimal ValorAluguel { get; set; }
         public bool Disponivel { get; set; } = true;
         public TipoImovel Tipo { get; set; }
+
+        public Guid UsuarioId { get; set; }
         public ResponseEnderecoJson Endereco { get; set; } = null!;
         public ResponseUsuarioJson Usuario { get; set; } = null!;
     }
