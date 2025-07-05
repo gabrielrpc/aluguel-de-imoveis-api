@@ -10,5 +10,7 @@ namespace aluguel_de_imoveis.Repository.Interfaces
         Task<List<Imovel>> ListarImoveisDisponiveis(RequestListarImoveisDisponiveis request);
 
         Task<Imovel?> ObterImovelPorId(Guid imovelId);
+
+        Task<Imovel> AtualizarImovel(Imovel imovel);
     }
 }

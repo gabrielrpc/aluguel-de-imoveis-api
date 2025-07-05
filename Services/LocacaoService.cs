@@ -30,8 +30,15 @@ namespace aluguel_de_imoveis.Services
 
             if (result.IsValid == false)
             {
-                var errorMessages = result.Errors.Select(error => error.ErrorMessage).ToList();
-                throw new ErrorOnValidationException(errorMessages);
+
+                if (result.Errors.Count > 1)
+                {
+                    var errorMessages = result.Errors.Select(error => error.ErrorMessage).ToList();
+                    throw new ErrorOnValidationException(errorMessages);
+                }
+
+                var errorMessage = result.Errors.First().ErrorMessage;
+                throw new BadRequestException(errorMessage);
             }
 
             var imovel = await _imovelRepository.ObterImovelPorId(request.ImovelId);
@@ -42,7 +49,7 @@ namespace aluguel_de_imoveis.Services
 
             if(imovel.UsuarioId == request.UsuarioId)
             {
-                throw new ConflictException("O usuário não pode alugar o próprio imóvel.");
+                throw new BadRequestException("O usuário não pode alugar o próprio imóvel.");
             }
 
             var existeLocacao = await _locacaoRepository.ObterLocacaoPorImovelIdEUsuarioId(request.ImovelId, request.UsuarioId);
@@ -62,7 +69,17 @@ namespace aluguel_de_imoveis.Services
                 ImovelId = request.ImovelId
             };
 
-            return await _locacaoRepository.RegistrarLocacao(novaLocacao);
+            var locacaoRegistrada = await _locacaoRepository.RegistrarLocacao(novaLocacao);
+
+            if (locacaoRegistrada == null)
+            {
+                throw new BadRequestException("Erro ao registrar a locação.");
+            }
+
+            imovel.Disponivel = false;
+            var imovelAtualizado = await _imovelRepository.AtualizarImovel(imovel);
+
+            return locacaoRegistrada;
         }
 
         public async Task<ResponseListarLocacoesAtivas> ListarLocacoesAtivas(RequestListarLocacoesAtivas request)

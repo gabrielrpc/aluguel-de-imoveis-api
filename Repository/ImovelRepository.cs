@@ -50,5 +50,12 @@ namespace aluguel_de_imoveis.Repository
         {
             return await _context.Imoveis.Include(imovel => imovel.Endereco).FirstOrDefaultAsync(imovel => imovel.Id == imovelId);
         }
+
+        public async Task<Imovel> AtualizarImovel(Imovel imovel)
+        {
+            _context.Imoveis.Update(imovel);
+            await _context.SaveChangesAsync();
+            return imovel;
+        }
     }
 }
