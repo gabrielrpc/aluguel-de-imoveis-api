@@ -9,7 +9,9 @@ namespace aluguel_de_imoveis.Communication.Dto
         public int DiasEmAndamento { get; set; }
         public int DiasRestantes { get; set; }
 
-        public string TituloImovel { get; set; } = string.Empty;
         public TipoImovel TipoImovel { get; set; }
+
+        public string NomeProprietario { get; set; } = string.Empty;
+        public string EmailProprietario { get; set; } = string.Empty;
     }
 }

@@ -32,7 +32,9 @@ namespace aluguel_de_imoveis.Repository
 
         public async Task<List<Locacao>> ListarLocacoesPorUsuarioId(Guid usuarioId, StatusLocacao status)
         {
-            return await _context.Locacoes.Include(l => l.Imovel).Where(locacao => locacao.UsuarioId == usuarioId && locacao.Status == status).ToListAsync();
+            return await _context.Locacoes.Include(locacao => locacao.Imovel)
+                .Include(locacao => locacao.Imovel.Usuario)
+                .Where(locacao => locacao.UsuarioId == usuarioId && locacao.Status == status).ToListAsync();
         }
     }
 }
