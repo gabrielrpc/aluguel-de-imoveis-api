@@ -24,14 +24,14 @@ API de gestão de aluguel de imóveis, desenvolvida em ASP.NET Core (.NET 9) e S
    cd aluguel-de-imoveis-api
 ```
    
-3. **Restaure as dependências:**
+2. **Restaure as dependências:**
 ```bash
    dotnet restore
 ```
    
-5. **Configure a string de conexão:** No arquivo `launchSettings.json` (Caso não altere, o banco será criado em: (localdb)\mssqllocaldb).
+3. **Configure a string de conexão:** No arquivo `launchSettings.json` (Caso não altere, o banco será criado em: (localdb)\mssqllocaldb).
 
-7. **Execute a aplicação:** Ao executar a aplicação, o banco de dados será criado baseado na sua string de conexão e executará a migration inicial do projeto assim como a inclusão dos seeders para testes.
+4. **Execute a aplicação:** Ao executar a aplicação, o banco de dados será criado baseado na sua string de conexão e executará a migration inicial do projeto assim como a inclusão dos seeders para testes.
 
 ## Estrutura do Projeto
 ```bash
