@@ -1,6 +1,6 @@
 # Sistema de Aluguel de Imóveis
 
-Aplicação web para gestão de aluguel de imóveis, desenvolvida em ASP.NET Core (.NET 9) e SQL Server.
+API de gestão de aluguel de imóveis, desenvolvida em ASP.NET Core (.NET 9) e SQL Server.
 
 ## Funcionalidades
 
