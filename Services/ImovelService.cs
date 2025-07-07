@@ -65,7 +65,7 @@ namespace aluguel_de_imoveis.Services
         {
             var imoveis = await _imoveloRepository.ListarImoveisDisponiveis(request);
 
-            if (imoveis == null || imoveis.Count == 0)
+            if ((imoveis == null || imoveis.Count == 0) && (request.ValorMax.HasValue || request.ValorMin.HasValue || request.Tipo.HasValue))
             {
                 throw new NotFoundException("Nenhum imóvel foi encontrado para os critérios informados.");
             }

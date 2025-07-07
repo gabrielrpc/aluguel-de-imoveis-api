@@ -2,6 +2,7 @@
 using aluguel_de_imoveis.Infraestructure.DataAccess;
 using aluguel_de_imoveis.Models;
 using aluguel_de_imoveis.Repository.Interfaces;
+using aluguel_de_imoveis.Utils.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace aluguel_de_imoveis.Repository
@@ -41,6 +42,11 @@ namespace aluguel_de_imoveis.Repository
             else if (request.ValorMax.HasValue)
             {
                 query = query.Where(imovel => imovel.ValorAluguel <= request.ValorMax.Value);
+            }
+
+            if (request.Tipo.HasValue)
+            {
+                query = query.Where(imovel => imovel.Tipo == request.Tipo.Value);
             }
 
             return await query.Where(imovel => imovel.Disponivel).Skip(skip).Take(PAGE_SIZE).ToListAsync();

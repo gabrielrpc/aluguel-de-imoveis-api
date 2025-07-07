@@ -96,6 +96,7 @@ namespace aluguel_de_imoveis.Services
                     ValorFinal = locacao.ValorFinal,
                     DiasEmAndamento = (hoje - locacao.DataInicio.Date).Days,
                     DiasRestantes = (locacao.DataFim.Date - hoje).Days,
+                    TituloImovel = locacao.Imovel.Titulo,
                     TipoImovel = locacao.Imovel.Tipo,
                     NomeProprietario = locacao.Imovel.Usuario.Nome,
                     EmailProprietario = locacao.Imovel.Usuario.Email
