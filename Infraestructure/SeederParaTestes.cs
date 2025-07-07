@@ -13,56 +13,62 @@ public static class SeederParaTestes
         var enderecos = new List<Endereco>();
         var locacoes = new List<Locacao>();
 
-        for (int i = 1; i <= 10; i++)
+        for (int i = 1; i <= 40; i++)
         {
-            var usuarioId = Guid.NewGuid();
-            var imovelId = Guid.NewGuid();
-            var enderecoId = Guid.NewGuid();
-            var locacaoId = Guid.NewGuid();
-
             usuarios.Add(new Usuario
             {
-                Id = usuarioId,
+                Id = Guid.NewGuid(),
                 Nome = $"Usuário {i}",
                 Email = $"usuario{i}@email.com",
                 Cpf = $"12345678{i:000}",
                 Telefone = $"21980001{i:000}",
                 Senha = BCrypt.Net.BCrypt.HashPassword("123456")
             });
+        }
+
+        for (int i = 0; i < 40; i++)
+        {
+            var usuarioDono = usuarios[i];
+            var imovelId = Guid.NewGuid();
+            var enderecoId = Guid.NewGuid();
 
             imoveis.Add(new Imovel
             {
                 Id = imovelId,
-                Titulo = $"Imóvel {i}",
-                Descricao = $"Descrição do imóvel {i}",
-                ValorAluguel = 1000 + (i * 100),
-                Disponivel = i % 2 == 0,
-                UsuarioId = usuarioId,
-                Tipo = (TipoImovel)(i % 3)
+                Titulo = $"Imóvel {i + 1}",
+                Descricao = $"Casa {i + 1} aconchegante com 3 quartos, sala espaçosa, cozinha equipada e quintal amplo. Localizada em um bairro tranquilo, próxima a comércios e escolas. Ideal para quem busca conforto e praticidade no dia a dia.",
+                ValorAluguel = 1000 + ((i + 1) * 100),
+                Disponivel = (i + 1) % 2 == 0,
+                UsuarioId = usuarioDono.Id,
+                Tipo = (TipoImovel)((i + 1) % 3)
             });
 
             enderecos.Add(new Endereco
             {
                 Id = enderecoId,
-                Logradouro = $"Rua {i}",
-                Numero = 100 + i,
-                Bairro = $"Bairro {i}",
-                Cidade = $"Cidade {i}",
+                Logradouro = $"Rua {i + 1}",
+                Numero = 100 + i + 1,
+                Bairro = $"Bairro {i + 1}",
+                Cidade = $"Cidade {i + 1}",
                 Uf = "SP",
-                Cep = $"01010{i:000}",
+                Cep = $"01010{i + 1:000}",
                 ImovelId = imovelId
             });
 
-            locacoes.Add(new Locacao
+            var usuarioLocatario = usuarios.FirstOrDefault(u => u.Id != usuarioDono.Id);
+            if (usuarioLocatario != null)
             {
-                Id = locacaoId,
-                ImovelId = imovelId,
-                UsuarioId = usuarioId,
-                ValorFinal = 1000 + (i * 100),
-                DataInicio = DateTime.UtcNow.AddDays(-i),
-                DataFim = DateTime.UtcNow.AddYears(1).AddDays(-i),
-                Status = (StatusLocacao)(i % 3)
-            });
+                locacoes.Add(new Locacao
+                {
+                    Id = Guid.NewGuid(),
+                    ImovelId = imovelId,
+                    UsuarioId = usuarioLocatario.Id,
+                    ValorFinal = 1000 + ((i + 1) * 100),
+                    DataInicio = DateTime.UtcNow.AddDays(-(i + 1)),
+                    DataFim = DateTime.UtcNow.AddYears(1).AddDays(-(i + 1)),
+                    Status = (StatusLocacao)((i + 1) % 3)
+                });
+            }
         }
 
         await context.Usuarios.AddRangeAsync(usuarios);

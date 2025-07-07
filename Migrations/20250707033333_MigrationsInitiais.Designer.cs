@@ -12,8 +12,8 @@ using aluguel_de_imoveis.Infraestructure.DataAccess;
 namespace aluguel_de_imoveis.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250630112740_MigrationsIniciais")]
-    partial class MigrationsIniciais
+    [Migration("20250707033333_MigrationsInitiais")]
+    partial class MigrationsInitiais
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
