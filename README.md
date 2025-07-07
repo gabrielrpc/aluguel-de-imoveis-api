@@ -21,7 +21,7 @@ API de gestão de aluguel de imóveis, desenvolvida em ASP.NET Core (.NET 9) e S
 1. **Clone o repositório:**
 ```bash
    git clone repo-url
-   cd aluguel-de-imoveis
+   cd aluguel-de-imoveis-api
 ```
    
 3. **Restaure as dependências:**
