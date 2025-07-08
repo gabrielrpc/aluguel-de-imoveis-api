@@ -49,14 +49,14 @@ namespace aluguel_de_imoveis.Controllers
             return Ok(imovel);
         }
 
-        [HttpPut("atualizar")]
+        [HttpPut("atualizar/{imovelId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseErrorMessegesJson), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ResponseErrorMessegeJson), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> AtualizarImovel(RequestAtualizarImovelJson request)
+        public async Task<IActionResult> AtualizarImovel([FromRoute] Guid ImovelId ,  RequestImovelJson request)
         {
-            var result = await _imovelService.AtualizarImovel(request);
+            var result = await _imovelService.AtualizarImovel(ImovelId, request);
             return Ok();
         }
 

@@ -128,7 +128,7 @@ namespace aluguel_de_imoveis.Services
             return response;
         }
 
-        public async Task<bool> AtualizarImovel(RequestAtualizarImovelJson request)
+        public async Task<bool> AtualizarImovel(Guid ImovelId, RequestImovelJson request)
         {
             request.Endereco.Cep = new string(request.Endereco.Cep.Where(char.IsDigit).ToArray());
 
@@ -149,7 +149,7 @@ namespace aluguel_de_imoveis.Services
                 throw new BadRequestException(errorMessage);
             }
 
-            var imovel = await _imoveloRepository.ObterImovelPorId(request.ImovelId);
+            var imovel = await _imoveloRepository.ObterImovelPorId(ImovelId);
 
             if (imovel == null)
             {
@@ -159,7 +159,6 @@ namespace aluguel_de_imoveis.Services
             imovel.Titulo = request.Titulo;
             imovel.Descricao = request.Descricao;
             imovel.ValorAluguel = request.ValorAluguel;
-            imovel.Disponivel = request.Disponivel;
             imovel.Tipo = request.Tipo;
             if (request.Endereco != null)
             {

@@ -12,7 +12,7 @@ namespace aluguel_de_imoveis.Services.Interfaces
 
         Task<ResponseImovelJson> ObterImovelPorId(RequestObterImovelJson request);
 
-        Task<bool> AtualizarImovel(RequestAtualizarImovelJson request);
+        Task<bool> AtualizarImovel(Guid imovelId, RequestImovelJson request);
 
         Task<bool> DeletarImovel(Guid imovelId);
     }
