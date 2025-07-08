@@ -27,5 +27,8 @@ namespace aluguel_de_imoveis.Models
         public Usuario Usuario { get; set; } = null!;
 
         public ICollection<Locacao> Locacoes { get; set; } = new List<Locacao>();
+
+        public DateTime DataCriacao { get; set; } = DateTime.UtcNow;
+        public DateTime DataAtualizacao { get; set; } = DateTime.UtcNow;
     }
 }

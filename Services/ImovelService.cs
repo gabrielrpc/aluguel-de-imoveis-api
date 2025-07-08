@@ -127,5 +127,61 @@ namespace aluguel_de_imoveis.Services
 
             return response;
         }
+
+        public async Task<bool> AtualizarImovel(RequestAtualizarImovelJson request)
+        {
+            request.Endereco.Cep = new string(request.Endereco.Cep.Where(char.IsDigit).ToArray());
+
+            var validator = new ImovelValidations();
+
+            var result = validator.Validate(request);
+
+            if (result.IsValid == false)
+            {
+
+                if (result.Errors.Count > 1)
+                {
+                    var errorMessages = result.Errors.Select(error => error.ErrorMessage).ToList();
+                    throw new ErrorOnValidationException(errorMessages);
+                }
+
+                var errorMessage = result.Errors.First().ErrorMessage;
+                throw new BadRequestException(errorMessage);
+            }
+
+            var imovel = await _imoveloRepository.ObterImovelPorId(request.ImovelId);
+
+            if (imovel == null)
+            {
+                throw new NotFoundException("Imóvel não foi encontrado.");
+            }
+
+            imovel.Titulo = request.Titulo;
+            imovel.Descricao = request.Descricao;
+            imovel.ValorAluguel = request.ValorAluguel;
+            imovel.Disponivel = request.Disponivel;
+            imovel.Tipo = request.Tipo;
+            if (request.Endereco != null)
+            {
+                imovel.Endereco.Logradouro = request.Endereco.Logradouro;
+                imovel.Endereco.Numero = request.Endereco.Numero;
+                imovel.Endereco.Bairro = request.Endereco.Bairro;
+                imovel.Endereco.Cidade = request.Endereco.Cidade;
+                imovel.Endereco.Uf = request.Endereco.Uf;
+                imovel.Endereco.Cep = request.Endereco.Cep;
+            }
+
+            return await _imoveloRepository.AtualizarImovel(imovel);
+        }
+
+        public async Task<bool> DeletarImovel(Guid imovelId)
+        {
+            var imovel = await _imoveloRepository.ObterImovelPorId(imovelId);
+            if (imovel == null)
+            {
+                throw new NotFoundException("Imóvel não foi encontrado.");
+            }
+            return await _imoveloRepository.DeletarImovel(imovel.Id);
+        }
     }
 }

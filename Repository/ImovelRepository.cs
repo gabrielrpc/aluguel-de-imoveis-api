@@ -29,7 +29,7 @@ namespace aluguel_de_imoveis.Repository
         {
             var skip = request.Pagina > 0 ? (request.Pagina - 1) * PAGE_SIZE : 0;
 
-            var query = _context.Imoveis.Include(imovel => imovel.Endereco).Include(imovel => imovel.Usuario).AsQueryable();
+            var query = _context.Imoveis.Include(imovel => imovel.Endereco).Include(imovel => imovel.Usuario).OrderByDescending(imovel => imovel.DataCriacao).AsQueryable();
 
             if (request.ValorMin.HasValue && request.ValorMax.HasValue)
             {
@@ -57,11 +57,17 @@ namespace aluguel_de_imoveis.Repository
             return await _context.Imoveis.Include(imovel => imovel.Endereco).FirstOrDefaultAsync(imovel => imovel.Id == imovelId);
         }
 
-        public async Task<Imovel> AtualizarImovel(Imovel imovel)
+        public async Task<bool> AtualizarImovel(Imovel imovel)
         {
             _context.Imoveis.Update(imovel);
-            await _context.SaveChangesAsync();
-            return imovel;
+            var registrosAfetados = await _context.SaveChangesAsync();
+            return registrosAfetados > 0;
+        }
+
+        public async Task<bool> DeletarImovel(Guid imovelId)
+        {
+            var registrosAfetados = await _context.Imoveis.Where(imovel => imovel.Id == imovelId).ExecuteDeleteAsync();
+            return registrosAfetados > 0;
         }
     }
 }

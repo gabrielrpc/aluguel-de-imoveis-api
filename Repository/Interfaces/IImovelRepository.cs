@@ -11,6 +11,8 @@ namespace aluguel_de_imoveis.Repository.Interfaces
 
         Task<Imovel?> ObterImovelPorId(Guid imovelId);
 
-        Task<Imovel> AtualizarImovel(Imovel imovel);
+        Task<bool> AtualizarImovel(Imovel imovel);
+
+        Task<bool> DeletarImovel(Guid imovelId);
     }
 }
