@@ -42,5 +42,35 @@ namespace aluguel_de_imoveis.Infraestructure.DataAccess
                 .HasIndex(u => u.Email)
                 .IsUnique();
         }
+
+        public override int SaveChanges()
+        {
+            AtualizarTimestamps();
+            return base.SaveChanges();
+        }
+
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            AtualizarTimestamps();
+            return await base.SaveChangesAsync(cancellationToken);
+        }
+
+        private void AtualizarTimestamps()
+        {
+            var agora = DateTime.UtcNow;
+
+            foreach (var entry in ChangeTracker.Entries<Imovel>())
+            {
+                if (entry.State == EntityState.Added)
+                {
+                    entry.Entity.DataCriacao = agora;
+                    entry.Entity.DataAtualizacao = agora;
+                }
+                else if (entry.State == EntityState.Modified)
+                {
+                    entry.Entity.DataAtualizacao = agora;
+                }
+            }
+        }
     }
 }

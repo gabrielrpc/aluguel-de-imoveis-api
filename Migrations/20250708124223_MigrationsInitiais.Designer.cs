@@ -12,7 +12,7 @@ using aluguel_de_imoveis.Infraestructure.DataAccess;
 namespace aluguel_de_imoveis.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20250707033333_MigrationsInitiais")]
+    [Migration("20250708124223_MigrationsInitiais")]
     partial class MigrationsInitiais
     {
         /// <inheritdoc />
@@ -70,6 +70,12 @@ namespace aluguel_de_imoveis.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DataAtualizacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Descricao")
                         .IsRequired()

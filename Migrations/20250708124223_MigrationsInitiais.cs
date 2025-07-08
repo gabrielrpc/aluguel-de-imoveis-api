@@ -37,7 +37,9 @@ namespace aluguel_de_imoveis.Migrations
                     ValorAluguel = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     Disponivel = table.Column<bool>(type: "bit", nullable: false),
                     Tipo = table.Column<int>(type: "int", nullable: false),
-                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    UsuarioId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataAtualizacao = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
