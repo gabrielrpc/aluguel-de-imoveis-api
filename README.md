@@ -42,10 +42,10 @@ aluguel-de-imoveis/
   ├── Controllers/            # Controllers da aplicação
   ├── Exceptions/             # Tratamento de exceções customizadas
   ├── Infraestructure/        # Contexto do EF Core e Seeders
-  ├── Migrations/             # Armazena a migration inicial para criação do banco
   │   ├── DataAccess/         # Acesso ao context
+  ├── Migrations/             # Armazena a migration inicial para criação do banco
   ├── Models/                 # Entidades de domínio
-  ├── Repository/
+  ├── Repository/             # Responsável pela persistência de dados 
   │   ├── Interfaces/         # Contratos de repositórios
   │   └── Implementations/    # Implementações dos repositórios
   ├── Security/               # Geração de token JWT, autenticação
